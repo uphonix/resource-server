@@ -19,11 +19,10 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 
 sudo apt-get update 2> /dev/null
 sudo apt-get install -y make 2> /dev/null
-sudo apt-get install -y git emacs23 tree curl openssl perlbrew 2> /dev/null
+sudo apt-get install -y git emacs23 tree curl openssl 2> /dev/null
 sudo apt-get install -y mysql-server 2> /dev/nul
 sudo apt-get install -y mysql-client 2> /dev/null
 sudo apt-get install -y nginx 2> /dev/null
-
 
 ## setup mysql
 if [ ! -f /var/log/db.setup ];
@@ -37,12 +36,12 @@ then
 
     if [ -f /vagrant/data/initial.sql ];
     then
-	mysql -uroot -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DBNAME} < /vagrant/data/initial.sql
+        mysql -uroot -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DBNAME} < /vagrant/data/initial.sql
     fi
 fi
 
-#\curl -L http://install.perlbrew.pl | bash
-
+# setup perlbrew
+sudo apt-get install -y perlbrew
 perlbrew init
 perlbrew install-cpanm
 perlbrew install -n perl-${PERL_VERSION}
@@ -54,23 +53,20 @@ echo "export PERLBREW_ROOT=${PERLBREW_ROOT}" >> /etc/profile.d/perlbrew.sh
 echo "export PATH=${PERLBREW_ROOT}/bin:${PERLBREW_ROOT}/perls/perl-${PERL_VERSION}/bin:\$PATH" >> /etc/profile.d/perlbrew.sh
 
 chmod +x /etc/profile.d/perlbrew.sh
-source /etc/profile.d/perlbrew.sh
 
-sudo -u vagrant -i "PERLBREW_ROOT=${PERLBREW_ROOT} source /etc/profile.d/perlbrew.sh && perlbrew use ${PERL_VERSION}"
-sudo -u vagrant -i "PERLBREW_ROOT=${PERLBREW_ROOT} source /etc/profile.d/perlbrew.sh && perlbrew lib create ${PROJECT_NAME}"
-sudo -u vagrant -i "PERLBREW_ROOT=${PERLBREW_ROOT} source /etc/profile.d/perlbrew.sh && perlbrew use ${PERL_VERSION}@${PROJECT_NAME}"
+sudo -i -u vagrant <<EOF
+    export PERLBREW_ROOT=${PERLBREW_ROOT}
+    source /etc/profile.d/perlbrew.sh
+    perlbrew use ${PERL_VERSION}
+    perlbrew lib create ${PROJECT_NAME} 
+    perlbrew use ${PERL_VERSION}@${PROJECT_NAME}
 
-sudo -u vagrant -i "PERLBREW_ROOT=${PERLBREW_ROOT} source /etc/profile.d/perlbrew.sh && which cpanm"
+    echo "export PERLBREW_ROOT=${PERLBREW_ROOT}" >> ~/.bashrc
+    echo "export PERLBREW_HOME=~/.perlbrew" >> ~/.bashrc
+    echo "source ${PERLBREW_ROOT}/etc/bashrc" >> ~/.bashrc
+    echo "perlbrew use ${PERL_VERSION}@${PROJECT_NAME}" >> ~/.bashrc
 
-sudo -u vagrant -i "cd /vagrant && cpanm -L extlib --installdeps ."
+    cd /vagrant && cpanm --notest --installdeps .
+EOF
 
-#run cpanfile
-#start servers
-
-
-
-# only really needed for apache
-# if ! [ -L /var/www ]; then
-#     rm -rf /var/www
-#     ln -fs /vagrant /var/www
-# fi
+# start servers
