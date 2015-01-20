@@ -22,20 +22,15 @@ requires 'DateTime', '>=1.0';
 requires 'Crypt::OpenSSL::RSA';
 requires 'Crypt::OpenSSL::AES';
 requires 'Log::Any';
-
 requires 'List::MoreUtils';
 requires 'Class::Accessor::Fast';
-
 requires 'Plack::Middleware::NoMultipleSlashes';
 requires 'Data::UUID';
 requires 'Moose', '>=2.1205';
-
 requires 'DateTime::Format::ISO8601';
 requires 'DateTime::Format::Strptime', '>= 1.0800';
 requires 'LWP::Protocol::https';
 requires 'Crypt::SSLeay';
-
-requires 'XML::LibXSLT', '== 1.78';
 requires 'Clone';
 
 #### Testing
