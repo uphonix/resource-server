@@ -4,7 +4,7 @@ use Test::More;
 use Data::Dumper;
 
 use Storedrobe;
-use Test::Mojo;
+use Test::Mojo::Storedrobe;
 
 # my $t = Test::Mojo->new('MyApp');
 
@@ -25,7 +25,7 @@ use Test::Mojo;
 
 # my $schema = Storedrobe::Schema->connect();
 
-my $t = Test::Mojo->new('Storedrobe');
+my $t = Test::Mojo::Storedrobe->new;
 
 $t->post_ok('/clothing/upload-csv')->status_is(200)->json_is({
     success => 1,
