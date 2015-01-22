@@ -14,7 +14,11 @@ use Mojo::Base 'Mojolicious::Controller';
 
 sub csv_upload {
     my $self = shift;
-    return $self->render( text => "okokok csv upload" );
+    my $response = {
+	success => 1,
+	message => "cv upload successful",
+    };
+    return $self->render( json => $response );
 }
 
 =head1 search
@@ -23,7 +27,15 @@ sub csv_upload {
 
 sub search {
     my $self = shift;
-    return $self->render( text => "search okokok" );
+    my $response = {
+	success => 1,
+	results => [
+	    "result 1",
+	    "result 2",
+	    "result 3"
+	    ]
+    };
+    return $self->render( json => $response );
 }
 
 =head1 tag_search
@@ -32,7 +44,16 @@ sub search {
 
 sub tag_search {
     my $self = shift;
-    return $self->render( text => "tag search ok" );
+    my $response = {
+	success => 1,
+	tags => [
+	    "tag 1",
+	    "tag 2",
+	    "tag 3"
+	    ]
+    };
+    return $self->render( json => $response );
 }
 
 1;
+
