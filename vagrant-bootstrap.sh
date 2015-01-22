@@ -20,7 +20,7 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 sudo apt-get update 2> /dev/null
 sudo apt-get install -y make 2> /dev/null
 sudo apt-get install -y git emacs23 tree curl openssl 2> /dev/null
-sudo apt-get install -y mysql-server 2> /dev/nul
+sudo apt-get install -y sqlite3 mysql-server 2> /dev/nul
 sudo apt-get install -y mysql-client 2> /dev/null
 sudo apt-get install -y nginx 2> /dev/null
 
