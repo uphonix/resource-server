@@ -1,3 +1,4 @@
+requires 'DBD::mysql';
 requires 'DBI';
 requires 'DBIx::Class';
 requires 'DBIx::Class::Migration';

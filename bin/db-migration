@@ -1,0 +1,16 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use FindBin;
+
+BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
+
+package MigrationScript;
+use Storedrobe;
+use Moose;
+extends 'DBIx::Class::Migration::Script';
+
+sub defaults { schema => Storedrobe->new->schema }
+
+package main;
+MigrationScript->run_with_options();

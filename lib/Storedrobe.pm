@@ -12,7 +12,8 @@ our $VERSION = '0.001';
 has 'schema' => (
     is => 'ro',
     isa => 'Storedrobe::Schema',
-    lazy_build => 1
+    lazy_build => 1,
+    required => 1,
 );
 
 sub startup {
@@ -30,10 +31,7 @@ sub startup {
 sub _build_schema {
     my ($self, %config) = @_;
 
-    return Storedrobe::Schema->connect(
-	$self->app->config->{db_dsn},
-	$self->app->config->{username},
-	$self->app->config->{password}
-    );
+    return Storedrobe::Schema->connect( $self->config->{db} );
 }
+
 1;
