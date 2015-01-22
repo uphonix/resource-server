@@ -14,3 +14,7 @@ sub defaults { schema => Storedrobe->new->schema }
 
 package main;
 MigrationScript->run_with_options();
+
+# always generate schema for SQL
+# --database MySQL --database SQLite
+# mojo pick up correct test config
