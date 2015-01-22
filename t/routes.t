@@ -26,11 +26,39 @@ use Test::Mojo;
 # my $schema = Storedrobe::Schema->connect();
 
 my $t = Test::Mojo->new('Storedrobe');
-$t->post_ok('/clothing/upload-csv')->status_is(200);
-$t->get_ok('/clothing/upload-csv')->status_is(404); 
-$t->post_ok('/clothing/search/jacket')->status_is(200);
-$t->get_ok('/clothing/search/jumper')->status_is(200); 
-$t->get_ok('/clothing/tag/winteroutfit')->status_is(200);
 
-#can_ok($schema, qw(init_routes));
+$t->post_ok('/clothing/upload-csv')->status_is(200)->json_is({
+    success => 1,
+    message => 'cv upload successful'
+});
+
+$t->get_ok('/clothing/upload-csv')->status_is(404); 
+
+$t->post_ok('/clothing/search/jacket')->status_is(200)->json_is({
+    success => 1,
+    results => [
+	"result 1",
+	"result 2",
+	"result 3"
+	],
+});
+
+$t->get_ok('/clothing/search/jumper')->status_is(200)->json_is({
+    success => 1,
+    results => [
+	"result 1",
+	"result 2",
+	"result 3"
+	],
+}); 
+
+$t->get_ok('/clothing/tag/winteroutfit')->status_is(200)->json_is({
+    success => 1,
+    tags => [
+	"tag 1",
+	"tag 2",
+	"tag 3"
+	],
+});
+
 done_testing();
