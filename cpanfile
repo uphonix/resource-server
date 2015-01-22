@@ -1,5 +1,6 @@
 requires 'DBI';
 requires 'DBIx::Class';
+requires 'DBIx::Class::Migration';
 requires 'JSON';
 requires 'Mojolicious';
 requires 'Test::Most';
