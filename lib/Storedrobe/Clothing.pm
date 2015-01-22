@@ -58,8 +58,7 @@ sub tag_search {
 	    "tag 3"
 	    ],
     };
-    use Data::Dumper;
-    return $self->render( json => Dumper($self->app->schema) );
+    return $self->render( json => $response );
 }
 
 1;
