@@ -9,4 +9,4 @@ $ENV{MOJO_HOME} = "$FindBin::Bin/..";
 
 # Start command line interface for application
 require Mojolicious::Commands;
-Mojolicious::Commands->start_app('Storedrobe');
+Mojolicious::Commands->start_app($ENV{DEV_APP});
