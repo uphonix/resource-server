@@ -1,4 +1,4 @@
-package ResourceServer::Schema::ResultSet::Item;
+package Storedrobe::Schema::ResultSet::Item;
 
 use strict;
 use warnings;

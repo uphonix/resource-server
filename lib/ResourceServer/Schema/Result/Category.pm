@@ -1,4 +1,4 @@
-package ResourceServer::Schema::Result::Category;
+package Storedrobe::Schema::Result::Category;
 
 use strict;
 use warnings;
@@ -18,7 +18,7 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('category_id');
 __PACKAGE__->belongs_to(
-    'items' => 'ResourceServer::Schema::Result::Item',
+    'items' => 'Storedrobe::Schema::Result::Item',
     {'foreign.category_fk'=>'self.category_id'}
 );
 

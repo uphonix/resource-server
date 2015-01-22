@@ -1,4 +1,4 @@
-package ResourceServer::Schema::Result::ItemTag;
+package Storedrobe::Schema::Result::ItemTag;
 
 use strict;
 use warnings;
@@ -21,11 +21,11 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('item_tag_id');
 
 __PACKAGE__->belongs_to(
-    'item' => 'ResourceServer::Schema::Result::Item',
+    'item' => 'Storedrobe::Schema::Result::Item',
     {'foreign.item_id'=>'self.item_fk'}
 );
 __PACKAGE__->has_one(
-    'tag' => 'ResourceServer::Schema::Result::Tag',
+    'tag' => 'Storedrobe::Schema::Result::Tag',
     {'foreign.tag_id'=>'self.tag_fk'}
 );
 

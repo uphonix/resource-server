@@ -1,4 +1,4 @@
-package ResourceServer::Schema;
+package Storedrobe::Schema;
 
 use strict;
 use warnings;
