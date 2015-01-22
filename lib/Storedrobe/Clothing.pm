@@ -1,10 +1,10 @@
+package Storedrobe::Clothing;
+
 =head1 Storedrobe::Clothing
 
   Storedrobe::Clothing - Main controller class
 
 =cut
-
-package Storedrobe::Clothing;
 
 use Mojo::Base 'Mojolicious::Controller';
 

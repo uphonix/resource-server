@@ -1,13 +1,12 @@
-use strict;
-use warnings;
-
 package Storedrobe;
 
+use strict;
+use warnings;
 use Mojo::Base 'Mojolicious';
 use Storedrobe::Schema;
 use Moose;
 
-our $VERSION = '0.001';
+our $VERSION = '0.1';
 
 has 'schema' => (
     is => 'ro',
@@ -21,17 +20,17 @@ sub startup {
 
     $self->plugin('Config');
 
-    my $router = $self->routes();
+    my $r = $self->routes;
 
-    $router->post('/clothing/upload-csv')->to('clothing#csv_upload');
-    $router->any('/clothing/search/:term')->to('clothing#search');
-    $router->any('/clothing/tag/:term')->to('clothing#tag_search');
+    $r->post('/clothing/upload-csv')->to('clothing#csv_upload');
+    $r->any('/clothing/search/:term')->to('clothing#search');
+    $r->any('/clothing/tag/:term')->to('clothing#tag_search');
 }
 
 sub _build_schema {
     my ($self, %config) = @_;
 
-    return Storedrobe::Schema->connect( $self->config->{db} );
+    return Storedrobe::Schema->connect(@{ $self->config->{db} });
 }
 
 1;
