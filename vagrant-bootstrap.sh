@@ -33,11 +33,6 @@ then
     echo "flush privileges" | mysql -uroot -p${MYSQL_ROOT_PASSWORD}
 
     touch /var/log/db.setup
-
-    if [ -f /vagrant/data/initial.sql ];
-    then
-        mysql -uroot -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DBNAME} < /vagrant/data/initial.sql
-    fi
 fi
 
 # setup perlbrew
