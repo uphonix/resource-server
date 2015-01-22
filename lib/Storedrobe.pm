@@ -17,16 +17,23 @@ has 'schema' => (
 
 sub startup {
     my $self = shift;
-    $self->init_routes();
-}
 
-sub init_routes {
-    my $self = shift;
-    
+    $self->plugin('Config');
+
     my $router = $self->routes();
 
     $router->post('/clothing/upload-csv')->to('clothing#csv_upload');
     $router->any('/clothing/search/:term')->to('clothing#search');
     $router->any('/clothing/tag/:term')->to('clothing#tag_search');
+}
+
+sub _build_schema {
+    my ($self, %config) = @_;
+
+    return Storedrobe::Schema->connect(
+	$self->app->config->{db_dsn},
+	$self->app->config->{username},
+	$self->app->config->{password}
+    );
 }
 1;
