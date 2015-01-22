@@ -3,5 +3,5 @@
 use Test::Most tests=>1;
 
 BEGIN {
-  use_ok 'ResourceServer::Schema';
+  use_ok 'Storedrobe::Schema';
 }

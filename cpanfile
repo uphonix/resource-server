@@ -3,6 +3,7 @@ requires 'DBIx::Class';
 requires 'DBIx::Class::Migration';
 requires 'JSON';
 requires 'Mojolicious';
+requires 'MojoX::Moose::Controller';
 requires 'Test::Most';
 requires 'Text::CSV';
 requires 'Try::Tiny';
