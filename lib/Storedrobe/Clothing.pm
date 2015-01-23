@@ -30,8 +30,8 @@ sub csv_upload {
     
     my $response;
 
-    if(!$upload->size) {
-	$response = {
+    if(!defined($upload) || !$upload->size) {
+	$response = { 
 	    error => "no file uploaded",
 	};
     } elsif($upload->headers->content_type ne "text/csv") {
