@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 #
-PROJECT_NAME="resource-server"
+PROJECT_NAME="storedrobe"
 PERLBREW_ROOT=/opt/perlbrew/perl5
 MYSQL_ROOT_PASSWORD="ROOTPASSWORD"
-MYSQL_USERNAME="ures"
-MYSQL_PASSWORD="mypass"
-MYSQL_DBNAME="ures"
+MYSQL_USERNAME="storedrobe"
+MYSQL_PASSWORD="storedrobe"
+MYSQL_DBNAME="storedrobe"
 PERL_VERSION=5.20.1
 
 # setup perl
