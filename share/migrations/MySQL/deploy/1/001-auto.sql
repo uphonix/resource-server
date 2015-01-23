@@ -12,7 +12,7 @@ CREATE TABLE `category` (
   `name` varchar(50) collate utf8_bin NOT NULL,
   PRIMARY KEY (`category_id`),
   UNIQUE `uniq_category` (`name`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Table: `tag`
 --
@@ -21,7 +21,7 @@ CREATE TABLE `tag` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`tag_id`),
   UNIQUE `uniq_tag_name` (`name`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Table: `item`
 --
@@ -33,7 +33,7 @@ CREATE TABLE `item` (
   PRIMARY KEY (`item_id`),
   UNIQUE `item_category_uniq` (`item_id`, `category_id`),
   CONSTRAINT `item_fk_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Table: `item_tag`
 --
@@ -47,5 +47,5 @@ CREATE TABLE `item_tag` (
   UNIQUE `item_tag_uniq` (`item_id`, `tag_id`),
   CONSTRAINT `item_tag_fk_item_id` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `item_tag_fk_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SET foreign_key_checks=1;
