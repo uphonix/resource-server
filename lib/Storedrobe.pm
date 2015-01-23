@@ -23,7 +23,7 @@ sub startup {
     my $r = $self->routes;
 
     $r->post('/clothing/upload-csv')->to('clothing#csv_upload');
-    $r->post('/clothing/item/:item_id/tag/:term')->to('clothing#tag_item');
+    $r->post('/clothing/:item_id/tag/:term')->to('clothing#tag_item');
 
     $r->any('/clothing/search/:term')->to('clothing#search');
     $r->any('/clothing/search/tag/:term')->to('clothing#tag_search');

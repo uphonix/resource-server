@@ -69,12 +69,11 @@ sub csv_upload {
 
 Tag an item of clothing.
 
-POST '/clothing/item/:item_id/tag/:term'
+POST '/clothing/:item_id/tag/:term'
 
 Patams:
  :item_id - ID of the clothing item to tag
  :term    - The name of the new tag
-
 
 =cut
 
