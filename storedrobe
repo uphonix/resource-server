@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-
-# Run Starman server, reload on file changes
+# 
+# Run Storedrobe app with Starman server, reload on file changes
 APP_CLASS=Storedrobe plackup -r -S Starman bin/app --port 5000
