@@ -89,8 +89,8 @@ schema:
             - category_fk
           match_type: ''
           name: item_fk_category_fk
-          on_delete: ''
-          on_update: ''
+          on_delete: CASCADE
+          on_update: CASCADE
           options: []
           reference_fields:
             - category_id
@@ -185,8 +185,8 @@ schema:
             - tag_fk
           match_type: ''
           name: item_tag_fk_tag_fk
-          on_delete: ''
-          on_update: ''
+          on_delete: CASCADE
+          on_update: CASCADE
           options: []
           reference_fields:
             - tag_id

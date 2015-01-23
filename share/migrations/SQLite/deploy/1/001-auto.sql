@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::SQLite
--- Created on Fri Jan 23 04:05:17 2015
+-- Created on Fri Jan 23 06:31:05 2015
 -- 
 
 ;
@@ -28,7 +28,7 @@ CREATE TABLE item (
   item_id INTEGER PRIMARY KEY NOT NULL,
   category_fk integer NOT NULL,
   name varchar(96) NOT NULL,
-  FOREIGN KEY (category_fk) REFERENCES category(category_id)
+  FOREIGN KEY (category_fk) REFERENCES category(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE INDEX item_idx_category_fk ON item (category_fk);
 CREATE UNIQUE INDEX item_category_uniq ON item (item_id, category_fk);
@@ -40,7 +40,7 @@ CREATE TABLE item_tag (
   item_fk integer NOT NULL,
   tag_fk integer NOT NULL,
   FOREIGN KEY (item_fk) REFERENCES item(item_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (tag_fk) REFERENCES tag(tag_id)
+  FOREIGN KEY (tag_fk) REFERENCES tag(tag_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE INDEX item_tag_idx_item_fk ON item_tag (item_fk);
 CREATE INDEX item_tag_idx_tag_fk ON item_tag (tag_fk);

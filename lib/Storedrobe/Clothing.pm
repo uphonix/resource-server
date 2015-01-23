@@ -20,15 +20,6 @@ Requires POST param 'csv_upload' - Field holding the uploaded CSV file
 
 POST '/clothing/upload-csv'
 
-On Success:
-Returns JSON hash containing:
- 'success' => 1,
- 'message' => 'success message'
-
-On Error:
-Returns JSON hash containing:
- 'error' => 'error message'
-
 =cut
 
 sub csv_upload {
@@ -74,49 +65,6 @@ sub csv_upload {
     return $self->render( json => $response );
 }
 
-=head1 search
-
-Search for items by name.
-
-POST '/clothing/search/:term'
-
-Patams:
- :term    - Name of clothing item to search for
-
-On Success:
-Returns JSON hash containing:
- 'success' => 1,
- 'message' => 'success message'
-
-On Error:
-Returns JSON hash containing:
- 'error' => 'error message'
-
-=cut
-
-sub search {
-    my $self = shift;
-    my $term = trim $self->param('term') or die "term is required";
-
-    my $schema = $self->app->schema;
-
-    my $item_rs = $schema->resultset('Item');
-    my @items = $item_rs->search_like({ name => "%$term%" });
-
-    return $self->render(
-	json => {
-	    success => 1,
-	    items => [ map {
-		+{
-		    name => $_->name,
-		    category => $_->category->name,
-		    tags => [ map { $_->tag->name } $_->item_tags ]
-		}
-	    } @items ],
-	},
-    );
-}
-
 =head1 tag_item
 
 Tag an item of clothing.
@@ -127,14 +75,6 @@ Patams:
  :item_id - ID of the clothing item to tag
  :term    - The name of the new tag
 
-On Success:
-Returns JSON hash containing:
- 'success' => 1,
- 'message' => 'success message'
-
-On Error:
-Returns JSON hash containing:
- 'error' => 'error message'
 
 =cut
 
@@ -144,8 +84,8 @@ sub tag_item {
     my $term = trim $self->param('term') or die "term is required";
 
     my $schema = $self->app->schema;
-
     my $item_rs = $schema->resultset('Item');
+
     my $item = $item_rs->find($item_id);
     
     my $response = {};
@@ -170,23 +110,50 @@ sub tag_item {
     return $self->render( json => $response );
 }
 
+=head1 search
+
+Search for items by name.
+
+POST '/clothing/search/:term'
+
+Patams:
+ :term    - Name of clothing item to search for
+
+
+=cut
+
+sub search {
+    my $self = shift;
+    my $term = trim $self->param('term') or die "term is required";
+
+    my $schema = $self->app->schema;
+    my $item_rs = $schema->resultset('Item');
+
+    my @items = $item_rs->search_like({ name => "%$term%" });
+
+    return $self->render(
+	json => {
+	    success => 1,
+	    items => [ map {
+		+{
+		    id => $_->id,
+		    name => $_->name,
+		    category => $_->category->name,
+		    tags => [ map { $_->tag->name } $_->item_tags ]
+		}
+	    } @items ],
+	},
+    );
+}
+
 =head1 tag_search
 
 Search for items by Tag.
 
-POST '/clothing/tag/:term'
+POST '/clothing/search/tag/:term'
 
 Patams:
  :term    - Prefix on tag to search
-
-On Success:
-Returns JSON hash containing:
- 'success' => 1,
- 'message' => 'success message'
-
-On Error:
-Returns JSON hash containing:
- 'error' => 'error message'
 
 =cut
 
@@ -195,27 +162,59 @@ sub tag_search {
     my $term = trim $self->param('term') or die "term is required";
 
     my $schema = $self->app->schema;
-
-    my $item_rs = $schema->resultset('ItemTag');
     my $tag_rs = $schema->resultset('Tag');
+
     my @tags = $tag_rs->search_like({ name => "$term%" });
 
-    my $response = {};
+    return $self->render(
+	json => {
+	    success => 1,
+	    items => [ map {
+		map { +{
+		    id => $_->id,
+		    name => $_->item->name,
+		    category => $_->item->category->name,
+		    tags => [ map { $_->tag->name } $_->item->item_tags ],
+		} } $_->item_tags
+	    } @tags ]
+	},
+    );
+}
 
-    if(!@tags) {
-#	my $items = [ map { $tag-> } @tags];
-	
-	$response = {
+
+=head1 category_search
+
+Search for items by Category.
+
+POST '/clothing/search/category/:term'
+
+Patams:
+ :term    - Category 'name' to find (exact match)
+
+=cut
+
+sub category_search {
+    my $self = shift;
+    my $term = trim $self->param('term') or die "term is required";
+
+    my $schema = $self->app->schema;
+    my $category_rs = $schema->resultset('Category');
+
+    my $category = $category_rs->find({ name => $term });
+
+    return $self->render(
+	json => {
 	    success => 1,
-	    items => [],
-	};	
-    } else {
-	$response = {
-	    success => 1,
-	    tags => \@tags,
-	};
-    }
-    return $self->render( json => $response );
+	    items => [ map {
+		+{
+		    id => $_->id,
+		    name => $_->name,
+		    category => $_->category->name,
+		    tags => [ map { $_->tag->name } $_->item_tags ],
+		}
+	    } $category->items ]
+	},
+    );
 }
 
 1;

@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::MySQL
--- Created on Fri Jan 23 04:05:17 2015
+-- Created on Fri Jan 23 06:31:05 2015
 -- 
 ;
 SET foreign_key_checks=0;
@@ -32,7 +32,7 @@ CREATE TABLE `item` (
   INDEX `item_idx_category_fk` (`category_fk`),
   PRIMARY KEY (`item_id`),
   UNIQUE `item_category_uniq` (`item_id`, `category_fk`),
-  CONSTRAINT `item_fk_category_fk` FOREIGN KEY (`category_fk`) REFERENCES `category` (`category_id`)
+  CONSTRAINT `item_fk_category_fk` FOREIGN KEY (`category_fk`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 --
 -- Table: `item_tag`
@@ -46,6 +46,6 @@ CREATE TABLE `item_tag` (
   PRIMARY KEY (`item_tag_id`),
   UNIQUE `item_tag_uniq` (`item_fk`, `tag_fk`),
   CONSTRAINT `item_tag_fk_item_fk` FOREIGN KEY (`item_fk`) REFERENCES `item` (`item_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `item_tag_fk_tag_fk` FOREIGN KEY (`tag_fk`) REFERENCES `tag` (`tag_id`)
+  CONSTRAINT `item_tag_fk_tag_fk` FOREIGN KEY (`tag_fk`) REFERENCES `tag` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 SET foreign_key_checks=1;

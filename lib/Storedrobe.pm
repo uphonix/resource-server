@@ -23,9 +23,12 @@ sub startup {
     my $r = $self->routes;
 
     $r->post('/clothing/upload-csv')->to('clothing#csv_upload');
-    $r->any('/clothing/search/:term')->to('clothing#search');
-    $r->any('/clothing/tag/:term')->to('clothing#tag_search');
     $r->post('/clothing/item/:item_id/tag/:term')->to('clothing#tag_item');
+
+    $r->any('/clothing/search/:term')->to('clothing#search');
+    $r->any('/clothing/search/tag/:term')->to('clothing#tag_search');
+    $r->any('/clothing/search/category/:term')->to('clothing#category_search');
+
 }
 
 sub _build_schema {

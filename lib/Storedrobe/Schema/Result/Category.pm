@@ -24,4 +24,9 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key('category_id');
 __PACKAGE__->add_unique_constraint('uniq_category' => [ 'name' ] );
 
+__PACKAGE__->has_many(
+    'items' => 'Storedrobe::Schema::Result::Item',
+    {'foreign.category_fk'=>'self.category_id'}
+);
+
 1;
