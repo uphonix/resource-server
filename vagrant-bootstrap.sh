@@ -49,8 +49,6 @@ echo "export PATH=${PERLBREW_ROOT}/bin:${PERLBREW_ROOT}/perls/perl-${PERL_VERSIO
 
 chmod +x /etc/profile.d/perlbrew.sh
 
-cpanm App::Ack --notest
-
 sudo -i -u vagrant <<EOF
     export PERLBREW_ROOT=${PERLBREW_ROOT}
     source /etc/profile.d/perlbrew.sh
