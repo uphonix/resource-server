@@ -25,6 +25,7 @@ sub startup {
     $r->post('/clothing/upload-csv')->to('clothing#csv_upload');
     $r->any('/clothing/search/:term')->to('clothing#search');
     $r->any('/clothing/tag/:term')->to('clothing#tag_search');
+    $r->post('/clothing/item/:item_id/tag/:term')->to('clothing#tag_item');
 }
 
 sub _build_schema {
