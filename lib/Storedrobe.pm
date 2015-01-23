@@ -1,5 +1,20 @@
 package Storedrobe;
 
+=head1 Storedrobe
+
+A small Mojolicious application to manage clothing items
+
+Routes:
+  /clothing/upload-csv            - upload CSV file
+  /clothing/:item_id/tag/:term    - add new tag to a clothing item
+  /clothing/search/:term          - search clothing items by name
+  /clothing/search/tag/:term      - search clothing items by tag
+  /clothing/search/category/:term - get clothing items by category name
+
+See class Storedrobe::Clothing for more docs on routes.
+
+=cut
+
 use strict;
 use warnings;
 use Mojo::Base 'Mojolicious';
@@ -14,6 +29,12 @@ has 'schema' => (
     lazy_build => 1,
     required => 1,
 );
+
+=head2 startup
+
+Main entry point into app, sets up config and routes
+
+=cut
 
 sub startup {
     my $self = shift;
@@ -31,6 +52,7 @@ sub startup {
 
 }
 
+# build schema object by connecting to DB with args from config
 sub _build_schema {
     my ($self, %config) = @_;
 

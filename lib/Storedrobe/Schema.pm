@@ -1,5 +1,11 @@
 package Storedrobe::Schema;
 
+=head1 Storedrobe::Schema
+
+Main Storedrobe 'DBIx::Class::Schema' class
+
+=cut
+
 use strict;
 use warnings;
 

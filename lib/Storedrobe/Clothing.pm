@@ -20,6 +20,8 @@ Requires POST param 'csv_upload' - Field holding the uploaded CSV file
 
 POST '/clothing/upload-csv'
 
+Returns JSON hash:
+
 =cut
 
 sub csv_upload {
@@ -71,9 +73,11 @@ Tag an item of clothing.
 
 POST '/clothing/:item_id/tag/:term'
 
-Patams:
- :item_id - ID of the clothing item to tag
- :term    - The name of the new tag
+Params:
+  :item_id - ID of the clothing item to tag
+  :term    - The name of the new tag
+
+Returns JSON hash:
 
 =cut
 
@@ -113,11 +117,14 @@ sub tag_item {
 
 Search for items by name.
 
-POST '/clothing/search/:term'
+Dies when required params are not supplied.
 
-Patams:
- :term    - Name of clothing item to search for
+GET '/clothing/search/:term'
 
+Params:
+  :term    - (Required) Name of clothing item to search for
+
+Returns JSON hash:
 
 =cut
 
@@ -149,10 +156,14 @@ sub search {
 
 Search for items by Tag.
 
-POST '/clothing/search/tag/:term'
+Dies when required params are not supplied.
 
-Patams:
- :term    - Prefix on tag to search
+GET '/clothing/search/tag/:term'
+
+Params:
+  :term    - (Required) Prefix on tag to search
+
+Returns JSON hash:
 
 =cut
 
@@ -185,10 +196,14 @@ sub tag_search {
 
 Search for items by Category.
 
-POST '/clothing/search/category/:term'
+Dies when required params are not supplied.
 
-Patams:
- :term    - Category 'name' to find (exact match)
+GET '/clothing/search/category/:term'
+
+Params:
+  :term    - (Required) Category 'name' to find (exact match)
+
+Returns JSON hash:
 
 =cut
 
