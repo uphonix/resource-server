@@ -1,3 +1,4 @@
+requires 'Class::CSV';
 requires 'DBD::mysql';
 requires 'DBI';
 requires 'DBIx::Class';
@@ -7,6 +8,7 @@ requires 'Mojolicious';
 requires 'MojoX::Moose::Controller';
 requires 'Test::Most';
 requires 'Text::CSV';
+requires 'Text::Trim';
 requires 'Try::Tiny';
 requires 'YAML';
 requires 'DateTime::Format::MySQL';
@@ -15,6 +17,7 @@ requires 'Log::Any';
 requires 'List::MoreUtils';
 requires 'Plack';
 requires 'Starman';
+
 requires 'Moose';
 
 #### Testing

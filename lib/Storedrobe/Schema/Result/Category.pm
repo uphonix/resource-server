@@ -5,21 +5,23 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
-__PACKAGE__->table('Category');
+__PACKAGE__->table('category');
 __PACKAGE__->add_columns(
     'category_id' => {
         data_type => 'integer',
+	is_nullable => 0,
+	is_auto_increment => 1,
     },
     'name' => {
         data_type => 'varchar',
         size => '50',
-    }
+        extra => {
+            'COLLATE' => 'utf8_bin',
+        },
+    },
 );
 
 __PACKAGE__->set_primary_key('category_id');
-__PACKAGE__->belongs_to(
-    'items' => 'Storedrobe::Schema::Result::Item',
-    {'foreign.category_fk'=>'self.category_id'}
-);
+__PACKAGE__->add_unique_constraint('uniq_category' => [ 'name' ] );
 
 1;

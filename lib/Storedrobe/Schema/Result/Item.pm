@@ -9,6 +9,8 @@ __PACKAGE__->table('item');
 __PACKAGE__->add_columns(
     'item_id' => {
         data_type => 'integer',
+	is_nullable => 0,
+	is_auto_increment => 1,
     },
     'category_fk' => {
 	data_type => 'integer',
@@ -16,10 +18,15 @@ __PACKAGE__->add_columns(
     'name' => {
         data_type => 'varchar',
         size => '96',
-    }
+        extra => {
+            'COLLATE' => 'utf8_bin',
+        },
+    },
 );
 
 __PACKAGE__->set_primary_key('item_id');
+__PACKAGE__->add_unique_constraint('item_category_uniq' => [ qw/item_id category_fk/ ] );
+
 __PACKAGE__->has_many(
     'item_tags' => 'Storedrobe::Schema::Result::ItemTag',
     {'foreign.item_fk'=>'self.item_id'}
