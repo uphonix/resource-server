@@ -128,7 +128,7 @@ sub search {
     my $schema = $self->app->schema;
     my $item_rs = $schema->resultset('Item');
 
-    my @items = $item_rs->search_like({ name => "%$term%" });
+    my @items = $item_rs->search({ name => {-like => "%$term%"} });
 
     return $self->render(
 	json => {
@@ -163,7 +163,7 @@ sub tag_search {
     my $schema = $self->app->schema;
     my $tag_rs = $schema->resultset('Tag');
 
-    my @tags = $tag_rs->search_like({ name => "$term%" });
+    my @tags = $tag_rs->search_like({ name => {-like =>"$term%"} });
 
     return $self->render(
 	json => {
