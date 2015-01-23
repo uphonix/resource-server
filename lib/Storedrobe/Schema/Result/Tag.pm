@@ -21,7 +21,7 @@ __PACKAGE__->add_unique_constraint('uniq_tag_name' => [ 'name' ] );
 
 __PACKAGE__->has_many(
     'item_tags' => 'Storedrobe::Schema::Result::ItemTag',
-    {'foreign.tag_fk'=>'self.tag_id'}
+    {'foreign.tag_id'=>'self.tag_id'}
 );
 
 1;

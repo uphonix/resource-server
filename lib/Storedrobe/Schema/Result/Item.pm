@@ -12,7 +12,7 @@ __PACKAGE__->add_columns(
 	is_nullable => 0,
 	is_auto_increment => 1,
     },
-    'category_fk' => {
+    'category_id' => {
 	data_type => 'integer',
     },
     'name' => {
@@ -25,15 +25,15 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key('item_id');
-__PACKAGE__->add_unique_constraint('item_category_uniq' => [ qw/item_id category_fk/ ] );
+__PACKAGE__->add_unique_constraint('item_category_uniq' => [ qw/item_id category_id/ ] );
 
 __PACKAGE__->has_many(
     'item_tags' => 'Storedrobe::Schema::Result::ItemTag',
-    {'foreign.item_fk'=>'self.item_id'}
+    {'foreign.item_id'=>'self.item_id'}
 );
 __PACKAGE__->has_one(
     'category' => 'Storedrobe::Schema::Result::Category',
-    {'foreign.category_id'=>'self.category_fk'}
+    {'foreign.category_id'=>'self.category_id'}
 );
 
 1;
