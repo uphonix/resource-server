@@ -64,7 +64,7 @@ sub csv_upload {
 	    success => 1,
 	};
     }
-    return $self->render( json => $response );
+    return $self->_json_response($response);
 }
 
 =head1 tag_item
@@ -83,8 +83,8 @@ Returns JSON hash:
 
 sub tag_item {
     my $self = shift;
-    my $item_id = $self->param('item_id') or die "item_id is required";
-    my $term = trim $self->param('term') or die "term is required";
+    my $item_id = $self->param('item_id') or $self->_json_response({ error => "item_id is required" });
+    my $term = trim $self->param('term') or $self->_json_response({ error => "term is required" });
 
     my $schema = $self->app->schema;
     my $item_rs = $schema->resultset('Item');
@@ -110,7 +110,7 @@ sub tag_item {
 	    message => sprintf("%s tagged", $item->name()),
 	};
     }
-    return $self->render( json => $response );
+    return $self->_json_response($response);
 }
 
 =head1 search
@@ -130,26 +130,24 @@ Returns JSON hash:
 
 sub search {
     my $self = shift;
-    my $term = trim $self->param('term') or die "term is required";
+    my $term = trim $self->param('term') or return $self->_json_response({ error => "term is required" });
 
     my $schema = $self->app->schema;
     my $item_rs = $schema->resultset('Item');
 
     my @items = $item_rs->search({ name => {-like => "%$term%"} });
 
-    return $self->render(
-	json => {
-	    success => 1,
-	    items => [ map {
-		+{
-		    id => $_->id,
-		    name => $_->name,
-		    category => $_->category->name,
-		    tags => [ map { $_->tag->name } $_->item_tags ]
-		}
-	    } @items ],
-	},
-    );
+    return $self->_json_response({
+	success => 1,
+	items => [ map {
+	    +{
+		id => $_->id,
+		name => $_->name,
+		category => $_->category->name,
+		tags => [ map { $_->tag->name } $_->item_tags ]
+	    }
+	} @items ],
+    });
 }
 
 =head1 tag_search
@@ -169,26 +167,24 @@ Returns JSON hash:
 
 sub tag_search {
     my $self = shift;
-    my $term = trim $self->param('term') or die "term is required";
+    my $term = trim $self->param('term') or return $self->_json_response({ error => "term is required" });
 
     my $schema = $self->app->schema;
     my $tag_rs = $schema->resultset('Tag');
 
     my @tags = $tag_rs->search_like({ name => {-like =>"$term%"} });
 
-    return $self->render(
-	json => {
-	    success => 1,
-	    items => [ map {
-		map { +{
-		    id => $_->id,
-		    name => $_->item->name,
-		    category => $_->item->category->name,
-		    tags => [ map { $_->tag->name } $_->item->item_tags ],
-		} } $_->item_tags
-	    } @tags ]
-	},
-    );
+    return $self->_json_response({
+	success => 1,
+	items => [ map {
+	    map { +{
+		id => $_->id,
+		name => $_->item->name,
+		category => $_->item->category->name,
+		tags => [ map { $_->tag->name } $_->item->item_tags ],
+	    } } $_->item_tags
+	} @tags ]
+    });
 }
 
 
@@ -209,27 +205,28 @@ Returns JSON hash:
 
 sub category_search {
     my $self = shift;
-    my $term = trim $self->param('term') or die "term is required";
+    my $term = trim $self->param('term') or return $self->_json_response({ error => "term is required" });
 
     my $schema = $self->app->schema;
     my $category_rs = $schema->resultset('Category');
 
     my $category = $category_rs->find({ name => $term });
 
-    return $self->render(
-	json => {
-	    success => 1,
-	    items => [ map {
-		+{
-		    id => $_->id,
-		    name => $_->name,
-		    category => $_->category->name,
-		    tags => [ map { $_->tag->name } $_->item_tags ],
-		}
-	    } $category->items ]
-	},
-    );
+    return $self->_json_response({
+	success => 1,
+	items => [ map {
+	    +{
+		id => $_->id,
+		name => $_->name,
+		category => $_->category->name,
+		tags => [ map { $_->tag->name } $_->item_tags ],
+	    }
+	} $category->items ]
+    });
 }
+
+# shortcut to return json error
+sub _json_response { $_[0]->render( json => shift ) }
 
 1;
 
