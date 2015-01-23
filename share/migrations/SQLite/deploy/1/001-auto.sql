@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::SQLite
--- Created on Fri Jan 23 06:31:05 2015
+-- Created on Fri Jan 23 08:48:42 2015
 -- 
 
 ;
@@ -26,23 +26,23 @@ CREATE UNIQUE INDEX uniq_tag_name ON tag (name);
 --
 CREATE TABLE item (
   item_id INTEGER PRIMARY KEY NOT NULL,
-  category_fk integer NOT NULL,
+  category_id integer NOT NULL,
   name varchar(96) NOT NULL,
-  FOREIGN KEY (category_fk) REFERENCES category(category_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE INDEX item_idx_category_fk ON item (category_fk);
-CREATE UNIQUE INDEX item_category_uniq ON item (item_id, category_fk);
+CREATE INDEX item_idx_category_id ON item (category_id);
+CREATE UNIQUE INDEX item_category_uniq ON item (item_id, category_id);
 --
 -- Table: item_tag
 --
 CREATE TABLE item_tag (
   item_tag_id INTEGER PRIMARY KEY NOT NULL,
-  item_fk integer NOT NULL,
-  tag_fk integer NOT NULL,
-  FOREIGN KEY (item_fk) REFERENCES item(item_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (tag_fk) REFERENCES tag(tag_id) ON DELETE CASCADE ON UPDATE CASCADE
+  item_id integer NOT NULL,
+  tag_id integer NOT NULL,
+  FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (tag_id) REFERENCES tag(tag_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE INDEX item_tag_idx_item_fk ON item_tag (item_fk);
-CREATE INDEX item_tag_idx_tag_fk ON item_tag (tag_fk);
-CREATE UNIQUE INDEX item_tag_uniq ON item_tag (item_fk, tag_fk);
+CREATE INDEX item_tag_idx_item_id ON item_tag (item_id);
+CREATE INDEX item_tag_idx_tag_id ON item_tag (tag_id);
+CREATE UNIQUE INDEX item_tag_uniq ON item_tag (item_id, tag_id);
 COMMIT;

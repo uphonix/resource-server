@@ -74,7 +74,7 @@ schema:
           expression: ''
           fields:
             - item_id
-            - category_fk
+            - category_id
           match_type: ''
           name: item_category_uniq
           on_delete: ''
@@ -86,9 +86,9 @@ schema:
         - deferrable: 1
           expression: ''
           fields:
-            - category_fk
+            - category_id
           match_type: ''
-          name: item_fk_category_fk
+          name: item_fk_category_id
           on_delete: CASCADE
           on_update: CASCADE
           options: []
@@ -97,13 +97,13 @@ schema:
           reference_table: category
           type: FOREIGN KEY
       fields:
-        category_fk:
+        category_id:
           data_type: integer
           default_value: ~
           is_nullable: 0
           is_primary_key: 0
           is_unique: 1
-          name: category_fk
+          name: category_id
           order: 2
           size:
             - 0
@@ -132,8 +132,8 @@ schema:
             - 96
       indices:
         - fields:
-            - category_fk
-          name: item_idx_category_fk
+            - category_id
+          name: item_idx_category_id
           options: []
           type: NORMAL
       name: item
@@ -156,8 +156,8 @@ schema:
         - deferrable: 1
           expression: ''
           fields:
-            - item_fk
-            - tag_fk
+            - item_id
+            - tag_id
           match_type: ''
           name: item_tag_uniq
           on_delete: ''
@@ -169,9 +169,9 @@ schema:
         - deferrable: 1
           expression: ''
           fields:
-            - item_fk
+            - item_id
           match_type: ''
-          name: item_tag_fk_item_fk
+          name: item_tag_fk_item_id
           on_delete: CASCADE
           on_update: CASCADE
           options: []
@@ -182,9 +182,9 @@ schema:
         - deferrable: 1
           expression: ''
           fields:
-            - tag_fk
+            - tag_id
           match_type: ''
-          name: item_tag_fk_tag_fk
+          name: item_tag_fk_tag_id
           on_delete: CASCADE
           on_update: CASCADE
           options: []
@@ -193,13 +193,13 @@ schema:
           reference_table: tag
           type: FOREIGN KEY
       fields:
-        item_fk:
+        item_id:
           data_type: integer
           default_value: ~
           is_nullable: 0
           is_primary_key: 0
           is_unique: 1
-          name: item_fk
+          name: item_id
           order: 2
           size:
             - 0
@@ -214,25 +214,25 @@ schema:
           order: 1
           size:
             - 0
-        tag_fk:
+        tag_id:
           data_type: integer
           default_value: ~
           is_nullable: 0
           is_primary_key: 0
           is_unique: 1
-          name: tag_fk
+          name: tag_id
           order: 3
           size:
             - 0
       indices:
         - fields:
-            - item_fk
-          name: item_tag_idx_item_fk
+            - item_id
+          name: item_tag_idx_item_id
           options: []
           type: NORMAL
         - fields:
-            - tag_fk
-          name: item_tag_idx_tag_fk
+            - tag_id
+          name: item_tag_idx_tag_id
           options: []
           type: NORMAL
       name: item_tag
