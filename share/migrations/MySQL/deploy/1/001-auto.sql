@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::MySQL
--- Created on Fri Jan 23 03:33:16 2015
+-- Created on Fri Jan 23 04:05:17 2015
 -- 
 ;
 SET foreign_key_checks=0;
@@ -9,7 +9,7 @@ SET foreign_key_checks=0;
 --
 CREATE TABLE `category` (
   `category_id` integer NOT NULL auto_increment,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(50) collate utf8_bin NOT NULL,
   PRIMARY KEY (`category_id`),
   UNIQUE `uniq_category` (`name`)
 ) ENGINE=InnoDB;
@@ -28,7 +28,7 @@ CREATE TABLE `tag` (
 CREATE TABLE `item` (
   `item_id` integer NOT NULL auto_increment,
   `category_fk` integer NOT NULL,
-  `name` varchar(96) NOT NULL,
+  `name` varchar(96) collate utf8_bin NOT NULL,
   INDEX `item_idx_category_fk` (`category_fk`),
   PRIMARY KEY (`item_id`),
   UNIQUE `item_category_uniq` (`item_id`, `category_fk`),

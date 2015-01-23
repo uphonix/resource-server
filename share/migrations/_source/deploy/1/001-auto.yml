@@ -43,6 +43,8 @@ schema:
         name:
           data_type: varchar
           default_value: ~
+          extra:
+            COLLATE: utf8_bin
           is_nullable: 0
           is_primary_key: 0
           is_unique: 1
@@ -119,6 +121,8 @@ schema:
         name:
           data_type: varchar
           default_value: ~
+          extra:
+            COLLATE: utf8_bin
           is_nullable: 0
           is_primary_key: 0
           is_unique: 0

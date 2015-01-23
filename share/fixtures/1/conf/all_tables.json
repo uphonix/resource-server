@@ -1,4 +1,7 @@
 {
+   "belongs_to" : {
+      "fetch" : 0
+   },
    "has_many" : {
       "fetch" : 0
    },
@@ -8,22 +11,19 @@
    "sets" : [
       {
          "quantity" : "all",
+         "class" : "ItemTag"
+      },
+      {
+         "class" : "Tag",
+         "quantity" : "all"
+      },
+      {
+         "quantity" : "all",
          "class" : "Category"
       },
       {
          "class" : "Item",
          "quantity" : "all"
-      },
-      {
-         "class" : "ItemTag",
-         "quantity" : "all"
-      },
-      {
-         "class" : "Tag",
-         "quantity" : "all"
       }
-   ],
-   "belongs_to" : {
-      "fetch" : 0
-   }
+   ]
 }
