@@ -76,19 +76,45 @@ sub csv_upload {
 
 =head1 search
 
+Search for items by name.
+
+POST '/clothing/search/:term'
+
+Patams:
+ :term    - Name of clothing item to search for
+
+On Success:
+Returns JSON hash containing:
+ 'success' => 1,
+ 'message' => 'success message'
+
+On Error:
+Returns JSON hash containing:
+ 'error' => 'error message'
+
 =cut
 
 sub search {
     my $self = shift;
-    my $response = {
-	success => 1,
-	results => [
-	    "result 1",
-	    "result 2",
-	    "result 3"
-	    ]
-    };
-    return $self->render( json => $response );
+    my $term = trim $self->param('term') or die "term is required";
+
+    my $schema = $self->app->schema;
+
+    my $item_rs = $schema->resultset('Item');
+    my @items = $item_rs->search_like({ name => "%$term%" });
+
+    return $self->render(
+	json => {
+	    success => 1,
+	    items => [ map {
+		+{
+		    name => $_->name,
+		    category => $_->category->name,
+		    tags => [ map { $_->tag->name } $_->item_tags ]
+		}
+	    } @items ],
+	},
+    );
 }
 
 =head1 tag_item
@@ -170,12 +196,15 @@ sub tag_search {
 
     my $schema = $self->app->schema;
 
+    my $item_rs = $schema->resultset('ItemTag');
     my $tag_rs = $schema->resultset('Tag');
     my @tags = $tag_rs->search_like({ name => "$term%" });
 
     my $response = {};
 
     if(!@tags) {
+#	my $items = [ map { $tag-> } @tags];
+	
 	$response = {
 	    success => 1,
 	    items => [],
