@@ -172,7 +172,7 @@ sub tag_search {
     my $schema = $self->app->schema;
     my $tag_rs = $schema->resultset('Tag');
 
-    my @tags = $tag_rs->search_like({ name => {-like =>"$term%"} });
+    my @tags = $tag_rs->search({ name => {-like =>"$term%"} });
 
     return $self->_json_response({
 	success => 1,
@@ -226,7 +226,7 @@ sub category_search {
 }
 
 # shortcut to return json error
-sub _json_response { $_[0]->render( json => shift ) }
+sub _json_response { shift->render( json => shift ) }
 
 1;
 
