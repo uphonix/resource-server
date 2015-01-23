@@ -40,6 +40,7 @@ sub startup {
     my $self = shift;
 
     $self->plugin('Config');
+    $self->plugin('Mojolicious::Plugin::UTF8'); # set utf8 charset in response headers
 
     my $r = $self->routes;
 
